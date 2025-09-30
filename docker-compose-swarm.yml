@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    image: "kasramp/gutendex:${IMAGE_TAG:-latest}"
+    environment:
+      ADMIN_EMAILS: ${ADMIN_EMAILS}
+      ADMIN_NAMES: ${ADMIN_NAMES}
+      ALLOWED_HOSTS: localhost
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      SECRET_KEY: ${SECRET_KEY}
+      STATIC_ROOT: /app/staticfiles
+      MEDIA_ROOT: /app/media
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_HOST_ADDRESS: ${EMAIL_HOST_ADDRESS}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "9193:9193"
+    networks:
+      - docker_gwbridge
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9193/books/"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+      start_period: 10s
+
+networks:
+  docker_gwbridge:
