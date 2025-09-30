@@ -1,0 +1,3 @@
+[submodule "gutendex"]
+	path = gutendex
+	url = https://github.com/garethbjohnson/gutendex.git
