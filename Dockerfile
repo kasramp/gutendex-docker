@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
     gcc libpq-dev python3-dev wget curl \
-    bzip2 ca-certificates \
+    bzip2 ca-certificates rsync \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

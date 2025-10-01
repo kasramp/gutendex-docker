@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-mkdir -p /app/catalog_files/tmp/cache/epub
-mkdir -p /app/catalog_files/tmp/cache/images
 mkdir -p /app/media
 
 echo "Running migrations..."
@@ -15,6 +13,4 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 echo "Starting server..."
-exec "$@"
-
 exec "$@"
