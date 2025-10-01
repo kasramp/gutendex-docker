@@ -12,12 +12,12 @@ WORKDIR /app
 COPY gutendex/requirements.txt .
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
-    && chmod +x /entrypoint.sh
+    && chmod +x entrypoint.sh
 
 COPY gutendex/ .
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x entrypoint.sh
 
 EXPOSE 9193
 ENTRYPOINT ["/entrypoint.sh"]
