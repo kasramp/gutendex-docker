@@ -6,7 +6,7 @@ services:
     environment:
       ADMIN_EMAILS: ${ADMIN_EMAILS}
       ADMIN_NAMES: ${ADMIN_NAMES}
-      ALLOWED_HOSTS: localhost
+      ALLOWED_HOSTS: "*"
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
@@ -19,6 +19,7 @@ services:
       EMAIL_HOST_ADDRESS: ${EMAIL_HOST_ADDRESS}
       EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
       EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      DEBUG: "false"
 
     deploy:
       replicas: 1
@@ -27,13 +28,14 @@ services:
     ports:
       - "9193:9193"
     networks:
-      - docker_gwbridge
+      - shared-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9193/books/"]
       interval: 30s
       timeout: 20s
       retries: 3
-      start_period: 10s
+      start_period: 30s
 
 networks:
-  docker_gwbridge:
+  shared-network:
+    external: true
